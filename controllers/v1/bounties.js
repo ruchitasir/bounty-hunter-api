@@ -79,7 +79,8 @@ router.delete('/',(req,res)=>{
 // PUT /v1/bounties/:id - Update a single bounty
 router.put('/:id',(req,res)=>{
     // finByIdAndUpdate method when new set to true will give the new updated bounty document
-    db.Bounty.findByIdAndUpdate({_id: req.params.id},{"reward": 9099, "captured": false}, {new:true})
+   // db.Bounty.findByIdAndUpdate({_id: req.params.id},{"reward": 9099, "captured": false}, {new:true})
+    db.Bounty.findByIdAndUpdate( req.params.id,    req.body , {new:true})
     .then(bounty=>{
         res.status(201).send(bounty)
     })
@@ -96,8 +97,23 @@ router.put('/:id',(req,res)=>{
         console.log('ERROR in delete id route', err)
         res.status(500).send({message: 'Oops?'})
     }) */
-})
+ }) 
 
+// alternative way of doing the update
+/* 
+router.put('/:id', (req, res) => {
+    db.Bounty.updateOne({
+        _id: req.params.id
+    },
+    req.body 
+    )
+    .then(bounty => {
+        res.send(bounty)
+    })
+    .catch(err => {
+        console.log('you made a boo boo', err)
+    })
+}) */
 
 
 
